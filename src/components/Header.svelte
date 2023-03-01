@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
+	import { Navbar, NavBrand } from 'flowbite-svelte';
 </script>
 
 <Navbar>
@@ -10,7 +10,7 @@
 			alt="Flowbite Logo"
 		/>
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-			Translate Speech
+			Speech To Translate
 		</span>
 	</NavBrand>
 </Navbar>

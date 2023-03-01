@@ -3,6 +3,10 @@
 	import Header from '../components/Header.svelte';
 </script>
 
+<svelte:head>
+	<title>SpeechToTranslate</title>
+</svelte:head>
+
 <div class="border-b-2">
 	<Header />
 </div>
