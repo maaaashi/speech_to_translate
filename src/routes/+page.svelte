@@ -23,7 +23,7 @@
 
 	setInterval(() => {
 		timer++
-		if (timer === 10) {
+		if (timer === 30) {
 			speechRecognizer.stopContinuousRecognitionAsync();
 		}
 	}, 1000)
