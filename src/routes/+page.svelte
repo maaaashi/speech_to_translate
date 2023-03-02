@@ -6,6 +6,7 @@
 
 	let text: string;
 	let mic = false;
+	let timer = 0;
 
 	const apikey = import.meta.env.VITE_SPEECH_KEY;
 	const region = import.meta.env.VITE_SPEECH_REGION;
@@ -20,8 +21,16 @@
 		}
 	};
 
+	setInterval(() => {
+		timer++
+		if (timer === 10) {
+			speechRecognizer.stopContinuousRecognitionAsync();
+		}
+	}, 1000)
+
 	speechRecognizer.sessionStarted = () => {
 		mic = true;
+		timer = 0;
 	};
 
 	speechRecognizer.sessionStopped = () => {
@@ -70,10 +79,15 @@
 </script>
 
 <div class="grid grid-cols-5">
-	<button on:click={switchSTT} class:mic class="mic-btn">
+	<button on:click={switchSTT} class:mic class="mic-btn mt-6">
 		<FaMicrophone />
 	</button>
 	<div class="col-span-4">
+		{#if mic}
+			{timer}
+		{:else}
+			0
+		{/if}秒 / 30秒
 		<Textarea bind:value={text} rows={3} placeholder="ここに文字起こしされます。" />
 	</div>
 </div>
