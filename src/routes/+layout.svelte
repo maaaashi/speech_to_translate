@@ -11,6 +11,6 @@
 	<Header />
 </div>
 
-<main class="mx-auto w-4/5 mt-10">
+<main class="mx-auto w-4/5 mt-8">
 	<slot />
 </main>

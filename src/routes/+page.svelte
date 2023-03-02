@@ -4,7 +4,9 @@
 	import FaMicrophone from 'svelte-icons/fa/FaMicrophone.svelte';
 	import { list } from '../lib/lang_list';
 
-	let text: string;
+	let prev_text: string = '';
+	let plus_text: string = '';
+	$: text = prev_text + plus_text
 	let mic = false;
 	let timer = 0;
 
@@ -17,8 +19,13 @@
 
 	speechRecognizer.recognized = (sender: sdk.Recognizer, event: sdk.SpeechRecognitionEventArgs) => {
 		if (event.result.text) {
-			text += event.result.text;
+			plus_text = ''
+			prev_text += event.result.text;
 		}
+	};
+
+	speechRecognizer.recognizing = (sender: sdk.Recognizer, event: sdk.SpeechRecognitionEventArgs) => {
+		plus_text = event.result.text
 	};
 
 	setInterval(() => {
@@ -41,6 +48,8 @@
 		if (mic) {
 			speechRecognizer.stopContinuousRecognitionAsync();
 		} else {
+			prev_text = '';
+			plus_text = '';
 			text = '';
 			speechRecognizer.startContinuousRecognitionAsync();
 		}
@@ -84,6 +93,9 @@
 	</button>
 	<div class="col-span-4">
 		{#if mic}
+			<span class="inline-block">
+				<Spinner size={"4"}/>
+			</span>
 			{timer}
 		{:else}
 			0
@@ -93,7 +105,7 @@
 </div>
 
 {#if text}
-	<div class="flex mb-5">
+	<div class="flex my-5">
 		<Select class="w-4/12" items={languages} bind:value={selectLang} />
 		<button disabled={loading} on:click={translate} class="border p-5 rounded-lg ml-2 bg-blue-300">
 			{#if loading}
